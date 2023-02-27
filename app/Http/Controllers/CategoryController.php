@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends Controller
 {
@@ -24,6 +26,7 @@ class CategoryController extends Controller
             $result[] = [
                 'id' => $category->id,
                 'name' => $category->name,
+                'level' => $category->level,
                 'children' => $children
             ];
         }
@@ -31,8 +34,19 @@ class CategoryController extends Controller
         return $result;
     }
 
+    public function store(CategoryStoreRequest $request)
+    {
+        $category = Category::create([
+            'name' => $request->name,
+            'parent_id' => $request->parent_id,
+            'level' => $request->level
+        ]);
+
+        return response(new CategoryResource($category), Response::HTTP_CREATED);
+    }
+
     public function getChilds(Request $request) {
         $categories = Category::where('parent_id', $request->id)->get();
-        return response()->json(CategoryResource::collection($categories));
+        return response(CategoryResource::collection($categories));
     }
 }
