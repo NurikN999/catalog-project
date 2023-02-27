@@ -18,7 +18,7 @@ class CategoryResource extends JsonResource
             'name' => $this->name,
             'parent_id' => $this->parent_id,
             'level' => $this->level,
-            'products' => $this->products
+            'products' => ProductResource::collection($this->products)
         ];
     }
 }
