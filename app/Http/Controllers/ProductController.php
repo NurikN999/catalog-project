@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Filters\ProductFilter;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
@@ -10,9 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(ProductFilter $filter)
     {
-        $products = Product::all();
+        $products = Product::filter($filter)->get();
 
         return response(ProductResource::collection($products));
     }
