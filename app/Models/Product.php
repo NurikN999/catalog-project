@@ -18,6 +18,11 @@ class Product extends Model
         'category_id'
     ];
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     public static function generateSlug($name)
     {
         if (static::whereSlug($slug = Str::slug($name))->exists()) {
