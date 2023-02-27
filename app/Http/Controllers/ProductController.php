@@ -29,4 +29,16 @@ class ProductController extends Controller
 
         return response(new ProductResource($product), Response::HTTP_CREATED);
     }
+
+    public function show($id)
+    {
+        return new ProductResource(Product::find($id));
+    }
+
+    public function findBySlug(Request $request)
+    {
+        $product = Product::where('slug', $request->slug)->first();
+
+        return new ProductResource($product);
+    }
 }
