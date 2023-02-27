@@ -23,6 +23,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/{id}', [CategoryController::class, 'getChilds']);
 
-    Route::get('/products/{slug}', [ProductController::class, 'findBySlug']);
-    Route::apiResource('products', ProductController::class);
+    Route::get('products/{param}', [ProductController::class, 'show']);
+    Route::post('products', [ProductController::class, 'store']);
 });
