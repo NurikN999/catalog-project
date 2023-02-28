@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\AuthController;
@@ -31,4 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('cart', [CartController::class, 'store']);
     Route::get('cart', [CartController::class, 'show']);
+
+    Route::apiResource('orders', OrderController::class)->only('index', 'show');
+    Route::post('export', [OrderController::class, 'export']);
 });
